@@ -2,6 +2,8 @@ package it.polito.tdp.alien;
 
 import java.net.URL;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.alien.model.Model;
@@ -47,6 +49,7 @@ public class FXMLController {
 		String parola = txtParola.getText();
 		for(char c:parola.toCharArray()) {
 			if(!(Character.isAlphabetic(c) || c==' ')) {
+				txtRisultati.appendText("\nSolo lettere ammesse");
 				throw new InvalidParameterException("Puoi inserire solo lettere");
 			}
 		}
@@ -56,11 +59,15 @@ public class FXMLController {
 			String translation = parola.substring(indice + 1);
 			al.addWord(alienWord, translation);
 		} else {
-			String tradotta = al.translateWord(parola);
+			List<String> tradotta =al.translateWord(parola);
 			if (tradotta==null) {
 				txtRisultati.appendText("\nparola non inserita nel dizionario!");
 			} else {
-				txtRisultati.appendText("\n" + tradotta);
+				String traduz="";
+				for(String s: tradotta) {
+					traduz=traduz+"\n"+s;
+				}
+				txtRisultati.appendText("\n" + traduz);
 			}
 		}
 

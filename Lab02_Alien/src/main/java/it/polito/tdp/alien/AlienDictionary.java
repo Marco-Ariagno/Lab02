@@ -1,30 +1,31 @@
 package it.polito.tdp.alien;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class AlienDictionary {
 
-	private List<Word> words = new ArrayList<>();
+	private List<WordEnhanced> words = new ArrayList<>();
 
 	public void addWord(String alienWord, String translation) {
-		Word w = new Word(alienWord, translation);
-		boolean trovata = false;
-		for (Word wo : words) {
-			if (wo.equals(w)) {
-				wo.setTranslation(translation);
-				trovata = true;
+		boolean trovato=false;
+		for(WordEnhanced w:words) {
+			if(w.getAlienWord().equals(alienWord)) {
+				w.addTranslation(translation);
+				trovato=true;
 			}
 		}
-		if (trovata == false) {
-			words.add(w);
+		if(trovato==false) {
+			WordEnhanced word=new WordEnhanced(alienWord, translation);
+			words.add(word);
 		}
 	}
 	
-	public String translateWord(String alienWord) {
-		for(Word w:words) {
+	public List<String> translateWord(String alienWord) {
+		for(WordEnhanced w:words) {
 			if(w.getAlienWord().toLowerCase().equals(alienWord.toLowerCase())) {
-				return w.getTranslation();
+				return w.getTraduzioni();
 			}
 		}
 		return null;
